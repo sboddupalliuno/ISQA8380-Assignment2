@@ -1,2 +1,1 @@
-release: python manage.py migrate
-web: gunicorn BloodBank.wsgi --log-file -
+web: gunicorn efs.wsgi --log-file -
