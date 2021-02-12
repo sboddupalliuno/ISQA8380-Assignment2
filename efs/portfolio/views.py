@@ -28,9 +28,7 @@ def customer_edit(request, pk):
            customer = form.save(commit=False)
            customer.updated_date = timezone.now()
            customer.save()
-           customer = Customer.objects.filter(created_date__lte=timezone.now())
-           return render(request, 'portfolio/customer_list.html',
-                         {'customers': customer})
+           return redirect('portfolio:customer_list')
    else:
         # edit
        form = CustomerForm(instance=customer)
@@ -58,8 +56,7 @@ def stock_edit(request, pk):
            # stock.customer = stock.id
            stock.updated_date = timezone.now()
            stock.save()
-           stocks = Stock.objects.all()
-           return render(request, 'portfolio/stock_list.html', {'stocks': stocks})
+           return redirect('portfolio:stock_list')
    else:
        # print("else")
        form = StockForm(instance=stock)
