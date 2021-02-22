@@ -39,9 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
     'portfolio',
     'crispy_forms',
-    'django.contrib.postgres'
+    'rest_framework',
+    'mathfilters',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -88,13 +91,11 @@ WSGI_APPLICATION = 'efs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'efs',
-        'USER': 'efs',
+        'NAME': 'efspart2',
+        'USER': 'efspart2',
         'PASSWORD': 'maverick1a'
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -114,7 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -131,6 +131,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+#AUTH_USER_MODEL = 'portfolio.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '/portfolio/static')
@@ -139,5 +141,22 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'boddupshweta@gmail.com'
+EMAIL_HOST_PASSWORD = 'IssPyaarKoKyaNaameDu@141'
+EMAIL_USE_TLS = True
+
+TWILIO_ACCOUNT_SID = os.getenv("ACf54c9ea27d3d03a97ddcd27caba158d9")
+TWILIO_AUTH_TOKEN = os.getenv("879b786f58af5cccedddd7a5b6b24ecb")
+TWILIO_NUMBER = os.getenv("+17064508598")
+SMS_BROADCAST_TO_NUMBERS = [
+    "", # use the format +19735551234
+    "",
+    "",
+]
 
 django_heroku.settings(locals())
