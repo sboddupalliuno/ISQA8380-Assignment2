@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
+import requests
 
 # Create your models here.
 class Customer(models.Model):
@@ -26,6 +26,20 @@ class Customer(models.Model):
 
     def __str__(self):
         return str(self.cust_number)
+
+    def indianrupee(self):
+        url = 'https://api.exchangeratesapi.io/latest?base=USD'
+        json_data = requests.get(url).json()
+        open_price = float(json_data["rates"]["INR"])
+        indianrupee_value = open_price
+        return indianrupee_value
+
+    def gbp(self):
+        url = 'https://api.exchangeratesapi.io/latest?base=USD'
+        json_data = requests.get(url).json()
+        open_price = float(json_data["rates"]["GBP"])
+        gbp_value = open_price
+        return gbp_value
 
 
 class Investment(models.Model):
@@ -68,3 +82,18 @@ class Stock(models.Model):
 
     def initial_stock_value(self):
         return self.shares * self.purchase_price
+
+
+    def current_stock_price(self):
+        symbol_f = str(self.symbol)
+        main_api = 'http://api.marketstack.com/v1/eod?'
+        api_key = 'access_key=7f712baa95c8525de960412488da055b&limit=1&symbols='
+        url = main_api + api_key + symbol_f
+        json_data = requests.get(url).json()
+        open_price = float(json_data["data"][0]["open"])
+        share_value = open_price
+        return share_value
+
+
+    def current_stock_value(self):
+        return float(self.current_stock_price()) * float(self.shares)

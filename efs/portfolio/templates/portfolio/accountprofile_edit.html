@@ -1,0 +1,15 @@
+    {% extends 'portfolio/base.html' %}
+    {% load static %}
+    {% load crispy_forms_tags %}
+    {% block content %}
+    <div class="row justify-content-center">
+                         <div class="ui main col col-md-6 mt-5">
+        <h1>Edit Profile Information</h1>
+        <form method="POST" class="StaffProfileEditForm">{% csrf_token %}
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="save btn btn-success">Update</button>
+        </form>
+    </div>
+    </div>
+    {% endblock %}

@@ -1,5 +1,7 @@
 from django import forms
 from .models import Customer, Stock, Investment
+from users.models import CustomUser
+from django.contrib.auth.forms import PasswordResetForm, ReadOnlyPasswordHashField
 
 class CustomerForm(forms.ModelForm):
     class Meta:
@@ -16,3 +18,8 @@ class InvestmentForm(forms.ModelForm):
         model = Investment
         fields = ('customer', 'category', 'description', 'acquired_value', 'acquired_date', 'recent_value','recent_date',)
 
+class CustomPasswordResetForm(PasswordResetForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ('email')
